@@ -56,34 +56,34 @@ public class ListStudent {
     public void addStudent(){
         Scanner sc = new Scanner(System.in);
         Student stNew = new Student();
-        while(true) {
-            stNew.setInforStudent();
-            if (isNewDataValid(stNew)) {
-                dataStudent.add(stNew);
-                System.out.println("Successfully add student !!");
+        stNew.setInforStudent();
+
+        if (isNewDataValid(stNew)) {
+            dataStudent.add(stNew);
+            System.out.println("Successfully add student !!");
+        }
+        else{
+            System.out.println("Your student data is not valid !!");
+            System.out.println("1. Refill your data  2. Go back");
+            System.out.print("Choose your option : ");
+            String option = sc.nextLine();
+
+            int choiceNumber;
+
+            try {
+                choiceNumber = Integer.valueOf(option).intValue();
+            } catch (NumberFormatException e) {
+                choiceNumber = 0;
             }
-            else{
-                System.out.println("Your student data is not valid !!");
-                System.out.println("1. Continue add data  2. Return");
-                System.out.print("Choose your option : ");
-                String option = sc.nextLine();
 
-                int choiceNumber;
+            clearScreen();
 
-                try {
-                    choiceNumber = Integer.valueOf(option).intValue();
-                } catch (NumberFormatException e) {
-                    choiceNumber = 0;
-                }
+            if (choiceNumber == 2)
+                return;
+            else if (0 == choiceNumber)
+                System.out.println("Your option is invalid ! Try again");
 
-                clearScreen();
 
-                if (choiceNumber == 2)
-                    return;
-                else if (0 == choiceNumber)
-                    System.out.println("Your option is invalid ! Type again");
-
-            }
         }
     }
 
@@ -126,6 +126,7 @@ public class ListStudent {
         PrintStream ps = new PrintStream(fileName);
         for (int i = 0; i < dataStudent.size(); i++)
             dataStudent.get(i).writeInforToFileTxt(ps);
+
         ps.close();
     }
 
@@ -136,6 +137,7 @@ public class ListStudent {
      */
     public void writeStudentToFileCSV(String fileName) throws FileNotFoundException {
         PrintStream ps = new PrintStream(fileName);
+        ps.println("ID,Name,GPA,image,address,notes");
         for (int i = 0; i < dataStudent.size(); i++)
             ps.println(dataStudent.get(i).convertToCSVString());
         ps.close();
@@ -147,6 +149,7 @@ public class ListStudent {
      * @throws IOException
      */
     public void importStudentFromFileTXT(String fileName) throws IOException {
+        dataStudent.clear();
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         while (true){
             String id = br.readLine();
@@ -173,6 +176,7 @@ public class ListStudent {
      * @throws IOException
      */
     public void importStudentFromFileCSV(String fileName) throws IOException {
+        dataStudent.clear();
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         br.readLine();
         while (true){
@@ -200,6 +204,29 @@ public class ListStudent {
     }
 
     /**
+     * Check the valid data of updated
+     * @param order
+     * @return
+     */
+    boolean isUpdatedDataValid(int order){
+        boolean isValid = true;
+        for (int i = 0; i < dataStudent.size(); i++)
+            if (i != order && dataStudent.get(i).getID().equals(dataStudent.get(order).getID())){
+               isValid = false;
+                System.out.println("Updated Student's ID (" + dataStudent.get(order).getID() + ") is not unique");
+               break;
+            }
+
+        if (dataStudent.get(order).getGPA() > 4.0 || dataStudent.get(order).getGPA() < 0){
+            isValid = false;
+            System.out.println("Updated student's GPA (" + dataStudent.get(order).getGPA() +
+                    " is out of range (0 -> 4)");
+        }
+
+        return isValid;
+    }
+
+    /**
      * Update student
      */
     public void updateStudent() {
@@ -217,11 +244,12 @@ public class ListStudent {
         if (order == -1)
             System.out.println("ID You press (" + idUpdate + ") is not valid");
         else {
-            dataStudent.get(order).updateInforStudent();
-            if (!isNewDataValid(dataStudent.get(order))) {
+            boolean isSuccess = dataStudent.get(order).updateInforStudent();
+            if (!isUpdatedDataValid(order)) {
                 System.out.println("Updated data is not valid !! ");
-
             }
+            else if (isSuccess)
+                System.out.println("Successfully update data");
         }
 
 

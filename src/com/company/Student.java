@@ -103,7 +103,13 @@ public class Student {
      * Update information for student
      */
 
-    public void updateInforStudent() {
+    public boolean updateInforStudent() {
+        String IDOld = ID;
+        String NameOld = Name;
+        String AddressOld = Address;
+        String ImageOld = Image;
+        double GPAOld = GPA;
+        String NotesOld = Notes;
         Scanner sc = new Scanner(System.in);
         System.out.println("--------------------------------------------------------");
 
@@ -148,7 +154,40 @@ public class Student {
                 break;
         }
 
-        System.out.println("--------------------------------------------------------");
+        while(true) {
+
+            System.out.println("Student's new data is ");
+            showInforStudent();
+
+            System.out.println("Do you want to update : ");
+            System.out.println("1. Yes   2. No");
+
+            String option = sc.nextLine();
+            int numberChoice;
+            try {
+                numberChoice = Integer.valueOf(option).intValue();
+            } catch (NumberFormatException e) {
+                numberChoice = 0;
+            }
+
+            switch (numberChoice) {
+                case 1:
+                    return true;
+                case 2:
+                    ID = IDOld;
+                    Name = NameOld;
+                    Address = AddressOld;
+                    Image = ImageOld;
+                    Notes = NotesOld;
+                    GPA = GPAOld;
+                    return false;
+                default:
+                    System.out.println("Your choice is invalid ! Try again");
+                    break;
+
+            }
+        }
+
 
     }
 
@@ -165,6 +204,7 @@ public class Student {
             ps.println(Image);
             ps.println(Address);
             ps.println(Notes);
+            ps.println();
     }
 
     /**

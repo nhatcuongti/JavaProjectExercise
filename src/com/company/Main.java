@@ -362,10 +362,12 @@ public class Main {
             switch (Integer.valueOf(choiceNumber).intValue()) {
                 case 1:
                     myListStudent.sortByAscendingID();
-                    return;
+                    break;
                 case 2:
                     myListStudent.sortByAscendingGPA();
                     break;
+                case 3:
+                    return;
                 default:
                     System.out.println("The option you choose is not valid ! Try again");
                     break;
@@ -382,9 +384,12 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         while(true) {
+            System.out.println("---------------------------------------------");
             System.out.println("Add Student Feature");
             System.out.println("1. Continue  2. Return  3. Go to menu");
+            System.out.println("---------------------------------------------");
             System.out.print("Press your option : ");
+
 
             String strPressed = sc.nextLine();
 
@@ -399,6 +404,7 @@ public class Main {
 
             switch (Integer.valueOf(choiceNumber).intValue()) {
                 case 1:
+                    myListStudent.addStudent();
                     break;
                 case 2:
                     return;
@@ -410,7 +416,7 @@ public class Main {
                     break;
             }
 
-            myListStudent.addStudent();
+
         }
 
     }
@@ -422,8 +428,10 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         while(true) {
+            System.out.println("------------------------------------");
             System.out.println("Update Student Feature");
             System.out.println("1. Continue  2. Return  3. Go to menu");
+            System.out.println("-------------------------------------");
             System.out.print("Press your option : ");
 
             String strPressed = sc.nextLine();
@@ -439,6 +447,7 @@ public class Main {
 
             switch (Integer.valueOf(choiceNumber).intValue()) {
                 case 1:
+                    myListStudent.updateStudent();
                     break;
                 case 2:
                     return;
@@ -450,7 +459,6 @@ public class Main {
                     break;
             }
 
-            myListStudent.updateStudent();
         }
 
     }
@@ -521,6 +529,7 @@ public class Main {
 	// write your code here
         myListStudent = new ListStudent();
         mainMenu();
+
 
     }
 }
