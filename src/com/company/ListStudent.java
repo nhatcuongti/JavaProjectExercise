@@ -2,6 +2,8 @@ package com.company;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class ListStudent {
@@ -22,13 +24,67 @@ public class ListStudent {
         dataStudent = new ArrayList<Student>();
     }
 
+    public boolean isNewDataValid(Student newStudent){
+        boolean isValid = true;
+        // Check Identical ID
+        for (int i = 0; i < dataStudent.size(); i++)
+            if (dataStudent.get(i).getID().equals(newStudent.getID()))
+                isValid = false;
+
+        if (!isValid)
+            System.out.println("New student's ID (" + newStudent.getID() + ") is not unique !!");
+
+        //Check range of GPA
+        if (newStudent.getGPA() > 4 || newStudent.getGPA() < 0)
+        {
+            isValid = false;
+            System.out.println("New student's GPA (" + newStudent.getGPA() + ") is out of range (0 -> 4)");
+        }
+
+        return isValid;
+    }
+
+    public static void clearScreen(){
+        for (int i =0; i < 100; i++)
+            System.out.println();
+    }
+
+
     /**
      * Add new student to list
      */
     public void addStudent(){
+        Scanner sc = new Scanner(System.in);
         Student stNew = new Student();
-        stNew.setInforStudent();
-        dataStudent.add(stNew);
+        while(true) {
+            stNew.setInforStudent();
+            if (isNewDataValid(stNew)) {
+                dataStudent.add(stNew);
+                System.out.println("Successfully add student !!");
+            }
+            else{
+                System.out.println("Your student data is not valid !!");
+                System.out.println("1. Continue add data  2. Return");
+                System.out.print("Choose your option : ");
+                String option = sc.nextLine();
+
+                int choiceNumber;
+
+                try {
+                    choiceNumber = Integer.valueOf(option).intValue();
+                } catch (NumberFormatException e) {
+                    choiceNumber = 0;
+                }
+
+                clearScreen();
+
+                if (choiceNumber == 2)
+                    return;
+                else if (0 == choiceNumber)
+                    System.out.println("Your option is invalid ! Type again");
+
+            }
+        }
     }
 
     /**
@@ -102,6 +158,7 @@ public class ListStudent {
             String image = br.readLine();
             String address = br.readLine();
             String Notes = br.readLine();
+            br.readLine();
 
            Student newStudent = new Student(id, name, image, address, Notes, gpa);
 
@@ -128,5 +185,48 @@ public class ListStudent {
             dataStudent.add(newStudent);
         }
         br.close();
+    }
+
+    /**
+     * Sort student by ascending ID
+     */
+
+    public void sortByAscendingID() {
+        Collections.sort(dataStudent, new compareAscendingID());
+    }
+
+    public void sortByAscendingGPA() {
+        Collections.sort(dataStudent, new compareAscendingGPA());
+    }
+}
+
+class compareAscendingID implements Comparator<Student>{
+
+    @Override
+    public int compare(Student o1, Student o2) {
+        int IDo1 = Integer.valueOf(o1.getID()).intValue();
+        int IDo2 = Integer.valueOf(o2.getID()).intValue();
+
+        if (IDo1 > IDo2)
+            return 1;
+        else if (IDo1 == IDo2)
+            return 0;
+        else
+            return -1;
+    }
+}
+
+class compareAscendingGPA implements Comparator<Student>{
+
+    @Override
+    public int compare(Student o1, Student o2) {
+        Double GPAo1 = o1.getGPA();
+        Double GPAo2 = o2.getGPA();
+        if (GPAo1 > GPAo2)
+            return 1;
+        else if (GPAo1 == GPAo2)
+            return 0;
+        else
+            return -1;
     }
 }

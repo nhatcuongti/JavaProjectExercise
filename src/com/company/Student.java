@@ -179,7 +179,11 @@ public class Student {
     }
 
 
-
-
-
+    /**
+     * Get GPA
+     * @return GPA value
+     */
+    public double getGPA() {
+        return GPA;
+    }
 }
