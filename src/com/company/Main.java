@@ -419,6 +419,39 @@ public class Main {
      * Update Student
      */
     public static void updateStudentUI(){
+        Scanner sc = new Scanner(System.in);
+
+        while(true) {
+            System.out.println("Update Student Feature");
+            System.out.println("1. Continue  2. Return  3. Go to menu");
+            System.out.print("Press your option : ");
+
+            String strPressed = sc.nextLine();
+
+            int choiceNumber;
+            try {
+                choiceNumber = Integer.valueOf(strPressed).intValue();
+            } catch (NumberFormatException e) {
+                choiceNumber = 0;
+            }
+
+            clearScreen();
+
+            switch (Integer.valueOf(choiceNumber).intValue()) {
+                case 1:
+                    break;
+                case 2:
+                    return;
+                case 3:
+                    mainMenu();
+                    break;
+                default:
+                    System.out.println("The option you choose is not valid ! Try again");
+                    break;
+            }
+
+            myListStudent.updateStudent();
+        }
 
     }
 

@@ -198,6 +198,34 @@ public class ListStudent {
     public void sortByAscendingGPA() {
         Collections.sort(dataStudent, new compareAscendingGPA());
     }
+
+    /**
+     * Update student
+     */
+    public void updateStudent() {
+        Scanner sc = new Scanner(System.in);
+
+        String idUpdate = null;
+
+        System.out.println("There are list of student : ");
+        viewStudent();
+        System.out.print("Press Student's ID who you want to update : ");
+        idUpdate = sc.nextLine();
+
+        int order = getOrderOneStudent(idUpdate);
+        clearScreen();
+        if (order == -1)
+            System.out.println("ID You press (" + idUpdate + ") is not valid");
+        else {
+            dataStudent.get(order).updateInforStudent();
+            if (!isNewDataValid(dataStudent.get(order))) {
+                System.out.println("Updated data is not valid !! ");
+
+            }
+        }
+
+
+    }
 }
 
 class compareAscendingID implements Comparator<Student>{
