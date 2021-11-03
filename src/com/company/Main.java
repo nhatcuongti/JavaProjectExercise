@@ -334,11 +334,35 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         System.out.println("View Student features");
 
+        if (myListStudent.isEmpty()) {
+            while(true) {
+                System.out.println("Your list student is empty !! You need to load student from file!!");
+                System.out.println("1. Load Student from file  2. Main menu ");
+                System.out.print("Press your option : ");
+                String strPressed = sc.nextLine();
+
+                clearScreen();
+                switch (strPressed) {
+                    case "1":
+                        loadStudentUI();
+                        break;
+                    case "2":
+                        mainMenu();
+                        break;
+                    default:
+                        System.out.println("Your option is invalid !! Choose again");
+                        break;
+                }
+            }
+        }
+
         System.out.println("There are list of student : ");
         while (true){
             System.out.println("----------------------------------------------");
             myListStudent.viewStudent();
             System.out.println("----------------------------------------------");
+            System.out.println("Press any key and enter to continue....");
+            sc.nextLine();
 
             System.out.println("There are some option to view student : ");
             System.out.println("----------------------");
@@ -481,7 +505,8 @@ public class Main {
             System.out.println("2. View Student");
             System.out.println("3. Add Student");
             System.out.println("4. Update Student");
-            System.out.println("5. Exit");
+            System.out.println("5. Delete Student");
+            System.out.println("6. Exit");
             System.out.println("--------------------------------------------");
 
             System.out.print("Press your option :");
@@ -510,6 +535,9 @@ public class Main {
                     updateStudentUI();
                     break;
                 case 5 :
+                    deleteStudentUI();
+                    break;
+                case 6 :
                     System.exit(0);
                 default:
                     System.out.println("The option you choose is not valid ! Try again");
@@ -517,6 +545,28 @@ public class Main {
 
             }
 
+        }
+    }
+
+    /**
+     * UI delete student
+     */
+    private static void deleteStudentUI() {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("Delete Student Feature !!");
+            System.out.println("Do you want to use this feature ?");
+            System.out.println("1. Yes  2. No");
+            System.out.print("Your option is : ");
+            String option = sc.nextLine();
+
+            clearScreen();
+            if (option.equals("1"))
+                myListStudent.deleteStudent();
+            else if (option.equals("2"))
+                mainMenu();
+            else
+                System.out.println("Your option is not valid !! Choose again");
         }
     }
 

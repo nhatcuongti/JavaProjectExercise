@@ -57,6 +57,25 @@ public class ListStudent {
         Scanner sc = new Scanner(System.in);
         Student stNew = new Student();
         stNew.setInforStudent();
+        while(true) {
+            System.out.println("Dou you want to insert new student with above inforamtion ?");
+            System.out.println("1. Yes   2.  NO");
+            System.out.print("Choose your option : ");
+            String option = sc.nextLine();
+
+            clearScreen();
+            if (option.equals("1"))
+                break;
+            else if (option.equals("2"))
+                return;
+            else {
+                stNew.showInforStudent();
+                System.out.println("Your option is not valid !! Choose again");
+            }
+
+        }
+
+
 
         if (isNewDataValid(stNew)) {
             dataStudent.add(stNew);
@@ -107,12 +126,27 @@ public class ListStudent {
      * Delete one student on list
      */
     public void deleteStudent(){
-        Scanner sc = new Scanner(System.in);
-        viewStudent();
-        System.out.print("Press ID student you want to remove : ");
-        String idDel = sc.nextLine();
+        String idDel = "";
+        boolean isFirst = true;
+        int orderNumber;
+        while (true) {
+            Scanner sc = new Scanner(System.in);
+            viewStudent();
+            if (!isFirst)
+                System.out.println("ID " + idDel + " is not exists !! Choose again");
 
-        int orderNumber = getOrderOneStudent(idDel);
+            System.out.print("Press ID student you want to remove : ");
+            idDel = sc.nextLine();
+
+            orderNumber = getOrderOneStudent(idDel);
+            clearScreen();
+            if (orderNumber != -1)
+                break;
+
+            isFirst = false;
+        }
+
+        System.out.println("Delete Successfully student with ID " + idDel);
 
         dataStudent.remove(orderNumber);
     }
@@ -253,6 +287,17 @@ public class ListStudent {
         }
 
 
+    }
+
+    /**
+     * Check data is empty ?
+     * @return true/false
+     */
+    public boolean isEmpty(){
+        if (dataStudent.size() == 0)
+            return true;
+
+        return false;
     }
 }
 
