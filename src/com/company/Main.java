@@ -1,6 +1,9 @@
 package com.company;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.Buffer;
 import java.util.Scanner;
 
 public class Main {
@@ -101,7 +104,7 @@ public class Main {
 
     private static void loadStudentFromCSVUI() {
         Scanner sc = new Scanner(System.in);
-        String fileNameTXT = "file/input.csv";
+        String fileNameTXT = "input.csv";
 
         try {
             myListStudent.importStudentFromFileCSV(fileNameTXT);
@@ -113,7 +116,7 @@ public class Main {
             System.out.println("Load Student From File CSV");
             System.out.println("---------------------------------------");
             System.out.println("Successfully load student from file CSV");
-            System.out.println("Location : file/input.csv");
+            System.out.println("Location : input.csv");
             System.out.println("You can go to view to see data student");
             System.out.println("---------------------------------------");
             System.out.println("1. Go Back  2. Go to menu  3. View Student");
@@ -149,7 +152,7 @@ public class Main {
     public static void loadStudentFromTxtUI(){
         Scanner sc = new Scanner(System.in);
 
-        String fileNameTXT = "file/input.txt";
+        String fileNameTXT = "input.txt";
 
         try {
             myListStudent.importStudentFromFileTXT(fileNameTXT);
@@ -240,7 +243,7 @@ public class Main {
     private static void writeStudentToFileTXT() {
         Scanner sc = new Scanner(System.in);
 
-        String fileNameTXT = "file/output.txt";
+        String fileNameTXT = "output.txt";
         try {
             myListStudent.writeStudentToFileTXT(fileNameTXT);
         } catch (IOException e) {
@@ -251,7 +254,7 @@ public class Main {
             System.out.println("Write Student to file TXT");
             System.out.println("--------------------------------------");
             System.out.println("Successfully write student to file TXT");
-            System.out.println("File location : file/output.txt");
+            System.out.println("File location : output.txt");
             System.out.println("--------------------------------------");
 
             System.out.println("1. Go Back  2. Go to menu ");
@@ -286,7 +289,7 @@ public class Main {
     private static void writeStudentToFileCSV(){
         Scanner sc = new Scanner(System.in);
 
-        String fileNameTXT = "file/output.CSV";
+        String fileNameTXT = "output.CSV";
         try {
             myListStudent.writeStudentToFileCSV(fileNameTXT);
         } catch (IOException e) {
@@ -297,7 +300,7 @@ public class Main {
             System.out.println("Write Student to file TXT");
             System.out.println("--------------------------------------");
             System.out.println("Successfully write student to file TXT");
-            System.out.println("File location : file/output.csv");
+            System.out.println("File location : output.csv");
             System.out.println("--------------------------------------");
 
             System.out.println("1. Go Back  2. Go to menu ");
@@ -570,16 +573,21 @@ public class Main {
         }
     }
 
+
     /**
      * Main function
      * @param args
      * @throws IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, URISyntaxException {
 	// write your code here
         myListStudent = new ListStudent();
-        mainMenu();
+         mainMenu();
+
+
+
 
 
     }
+
 }

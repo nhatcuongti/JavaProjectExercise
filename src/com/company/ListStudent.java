@@ -157,6 +157,7 @@ public class ListStudent {
      * @throws IOException
      */
     public void writeStudentToFileTXT(String fileName) throws IOException {
+
         PrintStream ps = new PrintStream(fileName);
         for (int i = 0; i < dataStudent.size(); i++)
             dataStudent.get(i).writeInforToFileTxt(ps);
@@ -170,6 +171,7 @@ public class ListStudent {
      * @throws FileNotFoundException
      */
     public void writeStudentToFileCSV(String fileName) throws FileNotFoundException {
+
         PrintStream ps = new PrintStream(fileName);
         ps.println("ID,Name,GPA,image,address,notes");
         for (int i = 0; i < dataStudent.size(); i++)
@@ -184,7 +186,16 @@ public class ListStudent {
      */
     public void importStudentFromFileTXT(String fileName) throws IOException {
         dataStudent.clear();
-        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
+        BufferedReader br = null;
+
+        if (in == null) {
+            fileName = "file/" + fileName;
+            br = new BufferedReader(new FileReader(fileName));
+        }
+        else
+            br = new BufferedReader(new InputStreamReader(in));
+
         while (true){
             String id = br.readLine();
             if (null == id)
@@ -211,8 +222,18 @@ public class ListStudent {
      */
     public void importStudentFromFileCSV(String fileName) throws IOException {
         dataStudent.clear();
-        BufferedReader br = new BufferedReader(new FileReader(fileName));
+
+        InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
+        BufferedReader br = null;
+
+        if (in == null) {
+            fileName = "file/" + fileName;
+            br = new BufferedReader(new FileReader(fileName));
+        }
+        else
+            br = new BufferedReader(new InputStreamReader(in));
         br.readLine();
+
         while (true){
             String csvStr = br.readLine();
             if (csvStr == null)

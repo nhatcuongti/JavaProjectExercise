@@ -1,9 +1,7 @@
 package com.company;
 
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
+import java.net.URL;
 import java.util.Scanner;
 
 public class Student {
@@ -225,5 +223,10 @@ public class Student {
      */
     public double getGPA() {
         return GPA;
+    }
+
+    public void readFile(String fileName) throws IOException {
+
+        System.out.println(getClass().getClassLoader().getResource(fileName));
     }
 }
